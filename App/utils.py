@@ -41,7 +41,7 @@ def load_allData():
 def cargar_errores_modelos():
     base_path = os.path.dirname(os.path.abspath(__file__))
     data_path = os.path.join(base_path, 'data', 'datosCorregidos.csv')
-    data_path = os.path.normpath(os.path.join(base_path, 'data', 'erroresModelos.csv'))
+    data_path = os.path.normpath(os.path.join(base_path, 'data', 'errores_modelos.csv'))
     return pd.read_csv(data_path)
 
 def seleccionar_mejor_arima(serie, p_range=(0, 3), d_range=(0, 2), q_range=(0, 3),horizonte=2):
