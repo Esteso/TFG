@@ -25,7 +25,7 @@ def load_data():
 def load_inflation_data():
     base_path = os.path.dirname(os.path.abspath(__file__))
     data_path = os.path.join(base_path, 'data', 'datosCorregidos.csv')
-    data_path = os.path.normpath(os.path.join(base_path, 'data', 'datosPanel.csv'))
+    data_path = os.path.normpath(os.path.join(base_path, 'data', 'datosCorregidos.csv'))
     df_inflacion = pd.read_csv(data_path, delimiter=";")
     df_inflacion = df_inflacion.replace(',', '.', regex=True)
 
