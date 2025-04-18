@@ -15,7 +15,7 @@ st.markdown(
 
 
 # Cargar DataFrame precalculado
-df_errores = pd.read_csv("./data/errores_modelos.csv")
+df_errores = pd.read_csv("../data/errores_modelos.csv")
 
 # Selector de sector (con "Todos")
 sectores = ["Todos"] + sorted(df_errores["SECTOR"].unique())

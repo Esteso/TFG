@@ -11,7 +11,7 @@ from sklearn.decomposition import PCA
 from sklearn.linear_model import LinearRegression
 
 def load_data(): 
-    df=pd.read_csv("./data/datosPanel.csv", delimiter=";")
+    df=pd.read_csv("../data/datosPanel.csv", delimiter=";")
     df = df.replace(',', '.', regex=True)
     columnas_numericas = ["SOLVENCIA", "LIQUIDEZ", "ACTIVO FIJO", "ROE (%)", "PRODUCTIVIDAD HUMANA","RATIO K/L", "ENDEUDAMIENTO (%)"]
     for col in columnas_numericas: 
@@ -19,7 +19,7 @@ def load_data():
     return df
 
 def load_inflation_data():
-    df_inflacion = pd.read_csv("./data/datosCorregidos.csv", delimiter=";")
+    df_inflacion = pd.read_csv("../data/datosCorregidos.csv", delimiter=";")
     df_inflacion = df_inflacion.replace(',', '.', regex=True)
 
     columnas_numericas = ["VALOR AÑADIDO*", "GASTOS PERSONAL*", "ACTIVO TOTAL*", "ACTIVO FIJO*", "RATIO K/L*"]
