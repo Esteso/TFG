@@ -1,6 +1,6 @@
 import streamlit as st
 import plotly.graph_objects as go
-from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error, mean_squared_error
+from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error, root_mean_squared_error
 import pandas as pd
 import utils
 
@@ -113,7 +113,7 @@ else:
     if not pred_futura:
         mae = mean_absolute_error(vReales, predicciones)
         mape = mean_absolute_percentage_error(vReales, predicciones)
-        rmse = mean_squared_error(vReales, predicciones, squared=False)
+        rmse = root_mean_squared_error(vReales, predicciones)
 
         errores_df = pd.DataFrame({
             "Métricas de error": ['MAE', 'MAPE', 'RMSE'],

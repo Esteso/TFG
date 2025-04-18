@@ -4,6 +4,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
 from sklearn.preprocessing import StandardScaler
+
 st.set_page_config(page_title="Evaluación y Comparación de modelos", page_icon="📊",layout="wide")
 
 
