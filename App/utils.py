@@ -9,9 +9,13 @@ from sklearn.cross_decomposition import PLSRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.linear_model import LinearRegression
+import os
 
 def load_data(): 
-    df=pd.read_csv("../data/datosPanel.csv", delimiter=";")
+    base_path = os.path.dirname(os.path.abspath(__file__))
+    data_path = os.path.join(base_path, 'data', 'datosPanel.csv')
+    data_path = os.path.normpath(os.path.join(base_path, 'data', 'datosPanel.csv'))
+    df=pd.read_csv(data_path, delimiter=";")
     df = df.replace(',', '.', regex=True)
     columnas_numericas = ["SOLVENCIA", "LIQUIDEZ", "ACTIVO FIJO", "ROE (%)", "PRODUCTIVIDAD HUMANA","RATIO K/L", "ENDEUDAMIENTO (%)"]
     for col in columnas_numericas: 
@@ -19,7 +23,10 @@ def load_data():
     return df
 
 def load_inflation_data():
-    df_inflacion = pd.read_csv("../data/datosCorregidos.csv", delimiter=";")
+    base_path = os.path.dirname(os.path.abspath(__file__))
+    data_path = os.path.join(base_path, 'data', 'datosCorregidos.csv')
+    data_path = os.path.normpath(os.path.join(base_path, 'data', 'datosPanel.csv'))
+    df_inflacion = pd.read_csv(data_path, delimiter=";")
     df_inflacion = df_inflacion.replace(',', '.', regex=True)
 
     columnas_numericas = ["VALOR AÑADIDO*", "GASTOS PERSONAL*", "ACTIVO TOTAL*", "ACTIVO FIJO*", "RATIO K/L*"]
@@ -30,6 +37,11 @@ def load_inflation_data():
 
 def load_allData():
     return pd.concat([load_data().set_index(["SECTOR","AÑO"]), load_inflation_data()], axis=1).reset_index(drop=False)
+
+def cargar_errores_modelos():
+    base_path = os.path.dirname(os.path.abspath(__file__))
+    data_path = os.path.normpath(os.path.join(base_path, '..', 'data', 'erroresModelos.csv'))
+    return pd.read_csv(data_path)
 
 def seleccionar_mejor_arima(serie, p_range=(0, 3), d_range=(0, 2), q_range=(0, 3),horizonte=2):
     mejor_rmse = float("inf")

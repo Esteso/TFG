@@ -4,7 +4,6 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
 from sklearn.preprocessing import StandardScaler
-
 st.set_page_config(page_title="Evaluación y Comparación de modelos", page_icon="📊",layout="wide")
 
 
@@ -15,7 +14,7 @@ st.markdown(
 
 
 # Cargar DataFrame precalculado
-df_errores = pd.read_csv("../data/errores_modelos.csv")
+df_errores = utils.cargar_errores_modelos()
 
 # Selector de sector (con "Todos")
 sectores = ["Todos"] + sorted(df_errores["SECTOR"].unique())
