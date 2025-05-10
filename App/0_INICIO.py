@@ -3,7 +3,7 @@ import streamlit as st
 # Estilo general
 
 st.set_page_config(page_title="TFG - INICIO", page_icon="🏠",layout="wide")
-
+#0_🏠_INICIO
 
 st.markdown("""
 <div style='background-color: #1565c0; padding: 30px; border-radius: 10px; text-align: center; color: white'>
@@ -26,7 +26,7 @@ Las funcionalidades principales se dividen en tres secciones:
   Visualiza y compara indicadores históricos entre sectores clave, como turismo, agroalimentario, tecnología, construcción o transporte.
 
 - 📈 **Modelos de Predicción**  
-  Aplica distintos modelos de predicción (ARIMA, Suavizado Exponencial, PLS, Regresión + PCA) para estimar el valor añadido futuro.
+  Aplica distintos modelos de predicción (ARIMA, Suavizado Exponencial, Regresión de Koyck, Regresión LASSO con rezagos) para estimar el valor añadido futuro.
 
 - 📊 **Evaluación y Comparación de Modelos**  
   Compara el rendimiento de los modelos mediante métricas como MAE, RMSE y MAPE, con visualizaciones en radar, heatmaps y barras.

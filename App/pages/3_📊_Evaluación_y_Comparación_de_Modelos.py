@@ -67,7 +67,7 @@ if sector_sel != "Todos":
         valores = df_norm.loc[modelo].values
         categorias = df_norm.columns
 
-        color = utils.coloresModelos.get(utils.modelo_estandar(modelo), "#888888")
+        color = utils.coloresModelos.get(modelo.upper(), "#888888")
 
         fig_radar.add_trace(go.Scatterpolar(
             r=list(valores) + [valores[0]],
@@ -112,7 +112,7 @@ df_melt = df_filtrado.melt(
 colores_modelos = utils.coloresModelos  # Ya definidos por ti
 
 # Agregar columna con color y patrón por modelo y métrica
-df_melt["MODELO_ESTD"] = df_melt["MODELO"].apply(utils.modelo_estandar)
+df_melt["MODELO_ESTD"] = df_melt["MODELO"].apply(modelo.upper())
 df_melt["Color"] = df_melt["MODELO_ESTD"].map(utils.coloresModelos)
 df_melt["Pattern"] = df_melt["Métrica"].apply(lambda x: "/" if x == "RMSE" else "")
 

@@ -20,7 +20,7 @@ col1, col2 = st.columns(2)
 with col1:
     modelo_seleccionado = st.selectbox(
         "Selecciona un modelo de predicción:",
-        ["Regresión múltiple + PCA", "ARIMA", "Suavizado Exponencial", "Regresión PLS", "Todos"]
+        ["Suavizado Exponencial", "ARIMA", "Regresión Koyck", "Regresión LASSO", "Todos"]
     )
 
 with col2:
@@ -82,7 +82,7 @@ if modelo_seleccionado == "Todos":
     st.plotly_chart(fig)
     st.info("Para comparar los errores de predicción, ve a la sección 'Comparación y evaluación de modelos'.")
 else:
-    modelo_key = utils.modelo_estandar(modelo_seleccionado)
+    modelo_key =  modelo_seleccionado.upper()
     if modelo_seleccionado=="ARIMA":
         predicciones, vReales = utils.predecir_modelo(df, sector_a_predecir, horizonte, modelo_key, pred_futura=pred_futura,orden_manual=orden)
     else:
