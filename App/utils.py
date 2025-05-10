@@ -76,13 +76,6 @@ miscolores = {
     "ESPAÑA": "#000000"
 }
 
-colores_modelos = {
-    "ARIMA": "#EF2C1B",
-    "SUAVIZADO EXPONENCIAL": "#F0BE09",
-    "REGRESIÓN KOYCK": "#2D1FF0",
-    "REGRESIÓN LASSO": "#1FF07C"
-}
-
 coloresModelos = {
     "ARIMA": "#EF2C1B",
     "SUAVIZADO EXPONENCIAL": "#F0BE09",
