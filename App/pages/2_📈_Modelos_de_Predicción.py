@@ -62,7 +62,7 @@ if modelo_seleccionado == "Todos":
             continue  # ya lo hemos graficado
         modelos_ya_mostrados.add(modelo)
         if modelo=="ARIMA":
-                predicciones, vReales, _ = utils.predecir_modelo(df, sector_a_predecir, horizonte, modelo, pred_futura=pred_futura)
+                predicciones, vReales, orden = utils.predecir_modelo(df, sector_a_predecir, horizonte, modelo, pred_futura=pred_futura)
         else:
             predicciones, vReales = utils.predecir_modelo(df, sector_a_predecir, horizonte, modelo, pred_futura=pred_futura)
         x_pred = [2023] + list(range(2024, 2024 + horizonte)) if pred_futura else list(range(2023 - horizonte, 2024))
@@ -72,7 +72,7 @@ if modelo_seleccionado == "Todos":
             x=x_pred,
             y=y_pred,
             mode='lines+markers',
-            name=modelo,
+            name=modelo + (f" - {orden}" if modelo == "ARIMA" else ""),
             line=dict(color=color, dash="dash")
         ))
     fig.update_layout(
