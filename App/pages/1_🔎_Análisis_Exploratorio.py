@@ -59,7 +59,7 @@ if inflacion:
             serie2=df_filtrado["VALOR AÑADIDO*"]/df_filtrado["EMPLEADOS"]
         else:
             serie1=df_filtrado[metrica+" (MIL €)"]
-            serie2=df_filtrado[metrica+"*"]
+            serie2=df_filtrado[metrica+"*"] 
         fig = go.Figure()
         fig.add_trace(go.Scatter(
                 x=df_filtrado["AÑO"], 

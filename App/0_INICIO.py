@@ -42,9 +42,9 @@ st.markdown("""
 <div style="background-color: #e3f2fd; padding: 20px 30px; border-radius: 10px; border-left: 6px solid #2196F3;">
     <h3 style="color: #1565c0;">🧭 Navegación</h3>
     <ul style="font-size: 17px; color: #0d47a1;">
-        <li><a href="./1_🔍_Análisis_Exploratorio" style="color: #1976d2; text-decoration: none;"><strong>🔍 Ir a Análisis Exploratorio</strong></a> – para visualizar los datos históricos.</li>
-        <li><a href="./2📈_Modelos_de_Predicción" style="color: #1976d2; text-decoration: none;"><strong>📈 Ir a Modelos de Predicción</strong></a> – para probar diferentes modelos ante distintos escenarios.</li>
-        <li><a href="./3_📊_Evaluación_de_Modelos" style="color: #1976d2; text-decoration: none;"><strong>📊 Ir a Evaluación de Modelos</strong></a> – para analizar los resultados de los modelos.</li>
+        <li><a href="Análisis_Exploratorio" style="color: #1976d2; text-decoration: none;"><strong>🔍 Ir a Análisis Exploratorio</strong></a> – para visualizar los datos históricos.</li>
+        <li><a href="/Modelos_de_Predicción" style="color: #1976d2; text-decoration: none;"><strong>📈 Ir a Modelos de Predicción</strong></a> – para probar diferentes modelos ante distintos escenarios.</li>
+        <li><a href="/Evaluación_y_Comparación_de_Modelos" style="color: #1976d2; text-decoration: none;"><strong>📊 Ir a Evaluación de Modelos</strong></a> – para analizar los resultados de los modelos.</li>
     </ul>
 </div>
 """, unsafe_allow_html=True)
