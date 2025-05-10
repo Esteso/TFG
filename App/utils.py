@@ -51,7 +51,8 @@ def cargar_errores_modelos():
 
 def seleccionar_mejor_arima(sector, horizonte):
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    ruta_csv = os.path.join(base_dir, "..", "data", "df_ordenesArima.csv")
+    ruta_csv = os.path.join(base_dir, 'data', 'df_ordenesArima.csv')
+    ruta_csv = os.path.normpath(os.path.join(base_dir, 'data', 'df_ordenesArima.csv'))
     df_ordenes = pd.read_csv(ruta_csv)
     df_ordenes["orden"] = df_ordenes["orden"].apply(ast.literal_eval)
     fila = df_ordenes[
@@ -124,7 +125,7 @@ def predecir_modelo(df, sector, horizonte, modelo, pred_futura=False, orden_manu
                 if p == 0 and q == 0:
                     orden=(1,1,1)
             elif orden_manual == "MEJOR ORDEN ENCONTRADO":
-                orden = seleccionar_mejor_arima(serie, horizonte=horizonte)
+                orden = seleccionar_mejor_arima(sector, horizonte=horizonte)
             elif orden_manual!=None:
                 orden = orden_manual
             else:   
@@ -135,7 +136,7 @@ def predecir_modelo(df, sector, horizonte, modelo, pred_futura=False, orden_manu
                     orden=(1,1,1)
         modelo_fit = ARIMA(X_train, order=orden).fit()
         predicciones = modelo_fit.forecast(steps=horizonte)
-        return predicciones, vReales
+        return predicciones, vReales, orden
 
     elif modelo == "SUAVIZADO EXPONENCIAL":
         df_sector = df[df["SECTOR"] == sector].sort_values("AÑO")

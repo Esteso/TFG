@@ -84,7 +84,7 @@ if modelo_seleccionado == "Todos":
 else:
     modelo_key =  modelo_seleccionado.upper()
     if modelo_seleccionado=="ARIMA":
-        predicciones, vReales = utils.predecir_modelo(df, sector_a_predecir, horizonte, modelo_key, pred_futura=pred_futura,orden_manual=orden)
+        predicciones, vReales, orden = utils.predecir_modelo(df, sector_a_predecir, horizonte, modelo_key, pred_futura=pred_futura,orden_manual=orden)
     else:
         predicciones, vReales = utils.predecir_modelo(df, sector_a_predecir, horizonte, modelo_key, pred_futura=pred_futura)
 
@@ -101,7 +101,7 @@ else:
     ))
 
     fig.update_layout(
-        title=f"Predicción de {horizonte} año(s) para {sector_a_predecir} usando {modelo_seleccionado}",
+        title=f"Predicción de {horizonte} año(s) para {sector_a_predecir} usando {modelo_seleccionado}" + (f" - orden {orden}" if modelo_seleccionado == "ARIMA" else ""),
         xaxis_title="Año",
         yaxis_title="Valor añadido (mil €)",
         legend=dict(x=0, y=1),
