@@ -112,7 +112,7 @@ df_melt = df_filtrado.melt(
 colores_modelos = utils.coloresModelos  # Ya definidos por ti
 
 # Agregar columna con color y patrón por modelo y métrica
-df_melt["MODELO_ESTD"] = df_melt["MODELO"].apply(modelo.upper())
+df_melt["MODELO_ESTD"] = df_melt["MODELO"]
 df_melt["Color"] = df_melt["MODELO_ESTD"].map(utils.coloresModelos)
 df_melt["Pattern"] = df_melt["Métrica"].apply(lambda x: "/" if x == "RMSE" else "")
 

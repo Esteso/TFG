@@ -8,10 +8,13 @@ from statsmodels.tsa.holtwinters import ExponentialSmoothing
 from sklearn.cross_decomposition import PLSRegression       
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression,LassoCV
 import pmdarima as pm
 import os
 import ast
+import statsmodels.api as sm
+
+
 
 def load_data(): 
     base_path = os.path.dirname(os.path.abspath(__file__))
@@ -76,7 +79,14 @@ colores_modelos = {
     "ARIMA": "#EF2C1B",
     "SUAVIZADO EXPONENCIAL": "#F0BE09",
     "REGRESIÓN KOYCK": "#2D1FF0",
-    "REGRESIÓN BOX-COX": "#1FF07C"
+    "REGRESIÓN LASSO": "#1FF07C"
+}
+
+coloresModelos = {
+    "ARIMA": "#EF2C1B",
+    "SUAVIZADO EXPONENCIAL": "#F0BE09",
+    "REGRESIÓN KOYCK": "#2D1FF0",
+    "REGRESIÓN LASSO": "#1FF07C"
 }
 
 def hay_tendencia(serie, umbral_porcentual=10):
@@ -108,6 +118,7 @@ def predecir_modelo(df, sector, horizonte, modelo, pred_futura=False, orden_manu
             X_train = serie[:-horizonte]
             vReales = serie[-horizonte:]
             if orden_manual == "ORDEN AUTO ARIMA":
+                forzar_d = hay_tendencia(list(X_train))
                 orden = pm.auto_arima(X_train,seasonal=False,stepwise=False,suppress_warnings=True,trace=False,error_action="ignore",test="kpss",start_p=1,start_q=1,max_p=3,max_q=3,d=1 if forzar_d else None).order
                 p, d, q = orden
                 if p == 0 and q == 0:
@@ -116,7 +127,8 @@ def predecir_modelo(df, sector, horizonte, modelo, pred_futura=False, orden_manu
                 orden = seleccionar_mejor_arima(serie, horizonte=horizonte)
             elif orden_manual!=None:
                 orden = orden_manual
-            else:         
+            else:   
+                forzar_d = hay_tendencia(list(X_train))
                 orden = pm.auto_arima(X_train,seasonal=False,stepwise=False,suppress_warnings=True,trace=False,error_action="ignore",test="kpss",start_p=1,start_q=1,max_p=3,max_q=3,d=1 if forzar_d else None).order
                 p, d, q = orden
                 if p == 0 and q == 0:
@@ -146,7 +158,7 @@ def predecir_modelo(df, sector, horizonte, modelo, pred_futura=False, orden_manu
         df_sector = df[df['SECTOR'] == sector].sort_values('AÑO').reset_index(drop=True)
         df_sector['VA_lag1'] = df_sector['VALOR AÑADIDO (MIL €)'].shift(1)
         df_sector = df_sector.dropna().reset_index(drop=True)
-        if prediccion_futura:
+        if pred_futura:
             df_entrenamiento = df_sector.copy()
         else:
             df_entrenamiento = df_sector.iloc[:-horizonte].copy()
@@ -154,7 +166,7 @@ def predecir_modelo(df, sector, horizonte, modelo, pred_futura=False, orden_manu
         X_train = df_entrenamiento[['VA_lag1']]
         X_train = sm.add_constant(X_train)
         modelo = sm.OLS(Y_train, X_train).fit()
-        df_pred = df_entrenamiento.copy() if not prediccion_futura else df_sector.copy()
+        df_pred = df_entrenamiento.copy() if not pred_futura else df_sector.copy()
         current_year = df_pred['AÑO'].max()
         predicciones = []
         años_predichos = []
@@ -173,16 +185,17 @@ def predecir_modelo(df, sector, horizonte, modelo, pred_futura=False, orden_manu
         return predicciones, vReales
 
     elif modelo=="REGRESIÓN LASSO":
+        lags=3
         target_col = 'VALOR AÑADIDO (MIL €)'
         df = df.reset_index(drop=False)
-        df_sector = df[df['SECTOR'] == sector_seleccionado].sort_values('AÑO').copy()
+        df_sector = df[df['SECTOR'] == sector].sort_values('AÑO').copy()
         df_sector = df_sector[df_sector[target_col] > 0].reset_index(drop=True)
         Y = df_sector[target_col]
         vReales = Y[-horizonte:]
         for lag in range(1, lags + 1):
             df_sector[f'{target_col}_lag{lag}'] = df_sector[target_col].shift(lag)
         df_sector = df_sector.dropna().reset_index(drop=True)
-        if prediccion_futura:
+        if pred_futura:
             df_entrenamiento = df_sector.copy()
         else:
             df_entrenamiento = df_sector.iloc[:-horizonte].copy()
@@ -222,7 +235,7 @@ def predecir_modelo(df, sector, horizonte, modelo, pred_futura=False, orden_manu
             new_row = {
             'AÑO': next_year,
             target_col: y_pred,
-            'SECTOR': sector_seleccionado
+            'SECTOR': sector
             }
             for lag in range(1, lags + 1):
                 new_row[f'{target_col}_lag{lag}'] = df_pred[df_pred['AÑO'] == (next_year - lag)][target_col].values[0]

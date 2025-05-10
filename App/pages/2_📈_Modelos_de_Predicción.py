@@ -58,7 +58,7 @@ fig.add_trace(go.Scatter(
 if modelo_seleccionado == "Todos":
     modelos_ya_mostrados = set()
     for modelo, color in utils.coloresModelos.items():
-        modelo_estandarizado = utils.modelo_estandar(modelo)
+        modelo_estandarizado = modelo.upper()
         if modelo_estandarizado in modelos_ya_mostrados:
             continue  # ya lo hemos graficado
         modelos_ya_mostrados.add(modelo_estandarizado)

@@ -3,7 +3,7 @@ import streamlit as st
 # Estilo general
 
 st.set_page_config(page_title="TFG - INICIO", page_icon="🏠",layout="wide")
-#0_🏠_INICIO
+#0_🏠_INICIO.py
 
 st.markdown("""
 <div style='background-color: #1565c0; padding: 30px; border-radius: 10px; text-align: center; color: white'>
