@@ -58,11 +58,10 @@ fig.add_trace(go.Scatter(
 if modelo_seleccionado == "Todos":
     modelos_ya_mostrados = set()
     for modelo, color in utils.coloresModelos.items():
-        modelo_estandarizado = modelo.upper()
-        if modelo_estandarizado in modelos_ya_mostrados:
+        if modelo in modelos_ya_mostrados:
             continue  # ya lo hemos graficado
-        modelos_ya_mostrados.add(modelo_estandarizado)
-        predicciones, _ = utils.predecir_modelo(df, sector_a_predecir, horizonte, modelo_estandarizado, pred_futura=pred_futura)
+        modelos_ya_mostrados.add(modelo)
+        predicciones, _ = utils.predecir_modelo(df, sector_a_predecir, horizonte, modelo, pred_futura=pred_futura)
         x_pred = [2023] + list(range(2024, 2024 + horizonte)) if pred_futura else list(range(2023 - horizonte, 2024))
         y_pred = [list(VAtoshow)[-1]] + list(predicciones) if pred_futura else [list(VAtoshow)[-horizonte-1]] + list(predicciones)
         
@@ -70,7 +69,7 @@ if modelo_seleccionado == "Todos":
             x=x_pred,
             y=y_pred,
             mode='lines+markers',
-            name=modelo_estandarizado,
+            name=modelo,
             line=dict(color=color, dash="dash")
         ))
     fig.update_layout(
